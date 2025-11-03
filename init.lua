@@ -20,8 +20,10 @@ vim.opt.isfname:append("@-@")
 vim.opt.cursorline = true
 vim.opt.autoread = true
 vim.opt.showtabline = 2
+vim.opt.fillchars = vim.opt.fillchars + "vert:║"
+vim.opt.showbreak = "↪  "
 
-vim.cmd.colorscheme("colours")
+vim.cmd.colorscheme("sndark")
 
 local group = vim.api.nvim_create_augroup('user_cmds', {clear = true})
 
@@ -211,12 +213,12 @@ function quick_term(scope, name)
     end
 
     local relative_w = 0.8
-    local relative_h = 0.9
+    local relative_h = 0.85
     local ui = vim.api.nvim_list_uis()[1]
     local w = math.floor(ui.width * relative_w)
     local h = math.floor(ui.height * relative_h)
-    local x = (ui.width / 2) - (w / 2)
-    local y = (ui.height / 2) - (h / 2)
+    local x = (ui.width - w) / 2
+    local y = (ui.height - h) / 2 - 1
     
     vim.api.nvim_open_win(scope.quick_term, true, {
         relative = "editor",
@@ -289,6 +291,7 @@ lazy.setup({
     {'tpope/vim-eunuch'},
     {"kwkarlwang/bufresize.nvim"},
     {'nvim-lua/plenary.nvim'},
+    {"RRethy/base16-nvim"},
 })
 
 require("telescope").setup {}
@@ -300,4 +303,5 @@ vim.keymap.set('n', '<leader>fp', builtin.git_files, {})
 vim.keymap.set("n", "<leader>fo", builtin.oldfiles, {})
 vim.keymap.set("n", "<leader>T", builtin.colorscheme, {})
 
+-- Bufresize
 require("bufresize").setup()
